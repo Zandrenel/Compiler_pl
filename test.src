@@ -1,0 +1,4 @@
+func id( id: integer) -> void 
+{
+  let id: integer;
+};

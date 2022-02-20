@@ -1,0 +1,130 @@
+START -> STRUCTORIMPLORFUNC .
+
+ADDOP -> plus 
+        |minus 
+        |or .
+
+APARAMS -> EXPR APARAMSTAIL 
+          |.
+
+APARAMSTAIL -> comma EXPR .
+
+ARITHEXPR -> TERM RIGHTRECARITHEXPR .
+
+ARRAYSIZE -> lsqbr ARRAYSIZEP rsqbr .
+
+ARRAYSIZEP -> intnum 
+             |.
+
+ASSIGNOP -> equal .
+
+EXPR ->  ARITHEXPR EXPR2.
+
+EXPR2 -> RELOP ARITHEXPR
+      |.
+
+FACTOR -> IDNEST FIDNEST 
+         |intlit 
+         |floatlit 
+         |lpar ARITHEXPR rpar 
+         |not FACTOR 
+         |SIGN FACTOR .
+
+FIDNEST -> id Fid_1 .
+
+Fid_1 -> INDICE 
+        |lpar APARAMS rpar .
+
+FPARAMS -> id colon TYPE ARRAYSIZE FPARAMSTAIL 
+          |.
+
+FPARAMSTAIL -> comma id colon TYPE ARRAYSIZE .
+
+FUNCBODY -> lcurbr VARDECLORSTAT rcurbr .
+
+FUNCDECL -> FUNCHEAD semi .
+
+FUNCDEF -> FUNCHEAD FUNCBODY .
+
+FUNCHEAD -> func id lpar FPARAMS rpar minusarrow RETURNTYPE .
+
+IDNEST ->  id Fid .
+
+Fid -> INDICE dot 
+      |lpar APARAMS rpar dot .
+
+IMPLDEF -> impl id lcurbr FUNCDEF rcurbr .
+
+INDICE -> lsqbr ARITHEXPR rsqbr .
+
+MEMBERDECL -> FUNCDECL 
+             |VARDECL .
+
+MULTOP -> mult 
+         |div 
+         |and .
+
+OPTSTRUCTDECL2 -> inherits id comma id 
+                 |.
+
+
+RELEXPR -> ARITHEXPR RELOP ARITHEXPR .
+
+RELOP -> eq 
+        |neq 
+        |lt 
+        |gt 
+        |leq 
+        |geq .
+
+RETURNTYPE -> TYPE 
+             |void .
+
+RIGHTRECARITHEXPR -> 
+                    |ADDOP TERM RIGHTRECARITHEXPR .
+
+RIGHTRECTERM -> 
+               |MULTOP FACTOR RIGHTRECTERM .
+
+
+SIGN -> plus 
+       |minus .
+
+STATBLOCK -> lcurbr STATEMENT rcurbr 
+            |STATEMENT 
+            |.
+
+STATEMENT -> IDNEST STATEMENT2 semi
+            |if lpar RELEXPR rpar then STATBLOCK else STATBLOCK semi 
+            |while lpar RELEXPR rpar STATBLOCK semi 
+            |read lpar VARIABLE rpar semi 
+            |write lpar EXPR rpar semi 
+            |return lpar EXPR rpar semi.
+
+
+STATEMENT2 ->  id INDICE ASSIGNOP EXPR 
+	     | lpar APARAMS rpar .
+
+
+
+STRUCTDECL -> struct id OPTSTRUCTDECL2 lcurbr VISIBILITY MEMBERDECL rcurbr semi .
+
+STRUCTORIMPLORFUNC -> STRUCTDECL 
+                     |IMPLDEF 
+                     |FUNCDEF .
+
+TERM -> FACTOR RIGHTRECTERM .
+
+TYPE -> integer 
+       |float 
+       |id .
+
+VARDECL -> let id colon TYPE ARRAYSIZE semi .
+
+VARDECLORSTAT -> VARDECL 
+                |STATEMENT .
+
+VARIABLE ->  IDNEST id INDICE.
+
+VISIBILITY -> public 
+             |private .
