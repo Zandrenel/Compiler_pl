@@ -1,4 +1,4 @@
-func id( id: integer) -> void 
+func id() -> void 
 {
-  let id: integer;
-};
+
+}

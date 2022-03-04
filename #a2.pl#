@@ -1430,4 +1430,4 @@ ast_generation(Filein,Fileout) :-
     close(S1),
     close(S2).
 
-% ?- 
+% ?- ast_generation("

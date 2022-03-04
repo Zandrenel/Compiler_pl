@@ -1,0 +1,182 @@
+\documentclass{article}
+
+\begin{document}
+
+start --> program.
+
+program --> structOrImplOrFuncplus.
+
+structOrImplOrFuncplus --> structOrImplOrFunc, structOrImplOrFuncplus
+			   |[].
+
+structOrImplOrFunc --> structDecl
+		       | implDef
+		       | funcDef.
+
+structDecl --> ["struct"], id, optstructdecl2, extraId,
+	       ["{"],
+	       visibilityMemberDef,
+	       ["}"],[";"].
+
+optstructdecl2 --> ["inherits"],id,[','],id
+		   |[].
+
+implDef --> ["impl"],["id"],
+	       ["{"],
+	       funcDefPlus,
+	       ["}"].
+
+
+funcDefPlus --> funcDef,funcDefPlus.
+funcDefPlus --> [].
+
+funcDef --> funcHead, funcBody.
+
+extraId --> id,[","],extraId
+	    | [].
+
+visibilityMemberDecl -->  visibilityMemberDecl,visibility, memberDecl.
+visibilityMemberDecl --> [].
+
+visibility --> ["public"].
+visibility --> ["private"].
+
+memberDecl --> funcDecl.
+memberDecl --> varDecl.
+
+funcDecl --> funcHead, [";"].
+
+funcHead --> ["func"], ["id"],["("],fParams,[")"],["->"],returnType.
+
+funcBody --> ["{"], varDeclOrStatPlus , ["}"].
+
+varDeclOrStatPlus --> varDeclOrStat, varDeclOrStatPlus
+		      |[].
+
+varDeclOrStat --> varDecl
+		  |statement.
+
+varDecl --> ["let"], id(X), [":"],type,arraySizePlus,[";"].
+
+arraySizePlus --> arraySize, arraySizePlus
+		  |[].
+
+statement --> idnest, statement2, [";"]
+	      |["if"], ["("], relExpr, [")"],
+	      ["then"], statBlock,
+	      ["else"], statBlock, [";"]
+	      |["while"], ["("],relExpr, [")"],
+	      statBlock,[";"]
+	      |["read"], ["("], variable, [")"], [";"]
+	      |["write"], ["("], expr, [")"], [";"]
+	      |["return"], ["("], expr, [")"], [";"].
+
+statement2 --> id, indice, assignop, expr
+	       | ["("], aparams, [")"].
+
+%assignStat --> variable, assignOp, expr.
+
+statBlock --> ["{"], statementPlus, ["}"]
+	      |statement
+	      |[].
+
+statementPlus --> statement, statementPlus
+		  | [].
+
+expr --> arithExpr, expr2.
+
+expr2 --> relOp, arithExpr
+	  |[].
+
+%relExpr --> arithExpr, relOp, arithExpr.
+
+
+arithExpr --> term, rightRightRecArithExpr.
+
+rightRightRecArithExpr --> addop, term, rightRightRecArithExpr
+			   |[].
+
+sign --> ["+"].
+sign --> ["-"].
+
+term --> factor, rightRecTerm.
+
+rightRecTerm --> multop, term, rightRecTerm
+		 |[].
+
+factor --> idnest, fidnest
+	   |["intLit"]
+	   |["floatLit"]
+	   |["("], arithExpr, [")"]
+	   |["not"], factor
+	   |sign, factor.
+
+fidnest --> id, fid1.
+
+fid1 --> indice
+	 |["("], aparams, [")"].
+
+variable --> idnestPlus, ["id"], indicePlus.
+
+functionCall --> idnestPlus, ["id"], ["("], aParams, [")"].
+
+idnestPlus --> idnest, idnestPlus
+	       |[].
+
+indicePlus -->  indice, indicePlus
+		|[].
+indice --> ["["], arithExpr, ["]"].
+
+idnest -->  id, fid, ["."]
+	   |["("], aparams, [")"],["."].
+
+arraySize --> ["["], arraySizeP, ["]"].
+
+arraySizeP --> integer(X)
+	       |[].
+
+type --> ["integer"]
+	 |["float"]
+	 |["id"].
+
+
+returnType --> type.
+returnType --> ["void"],{write("void")}.
+
+fParams --> {write("fParams")}, id, [":"], type, arraySizePlus, fParamsTailPlus
+	    |[].
+
+
+arraySizePlus --> arraySize, arraySizePlus
+		  |[].
+
+fParamsTailPlus -->  {write("fParamsTailPlus")},fParamsTail, fParamsTailPlus
+		     |[].
+
+fParamsTail -->{write("fParamsTail")}, [","], id, [":"], type, arraySizePlus.
+
+aParams --> expr, aParamsTailPlus
+	    |[].
+
+aParamsTailPlus --> aParamsTail, aParamsTailPlus
+		    |[].
+
+aParamsTail --> [","], expr.
+
+assignOp --> ["="].
+
+relOp --> ["eq"].
+relOp --> ["neq"].
+relOp --> ["lt"].
+relOp --> ["gt"].
+relOp --> ["leq"].
+relOp --> ["geq"].
+
+addOp --> ["+"].
+addOp --> ["-"].
+addOp --> ["or"].
+
+multOp --> ["*"].
+multOp --> ["/"].
+multOp --> ["and"].
+\end{document}
