@@ -1,0 +1,69 @@
+\documentclass{article}
+\usepackage{listings}
+
+\author{Alexander De Laurentiis}
+\title{Comp 442 A1}
+
+\begin{document}
+\maketitle
+\section{Attribute Grammar}
+Last minute compile errors have led me to exclude it from here but it would be available to be traced in an almost syntactically identicle fashion starting from line 879 of my program.
+
+\subsection{The Grammar as text}
+
+program([ProgramList])
+
+programList --> struct | imp | func | programList | .
+
+strct(id,inherits,[structdecl|reptstructdecl])
+reptstructdecl --> structdecl(visbility,member) reptstructdecl | .
+inherits(id,inherits)
+inherits(id,[])
+impldef(id,[reptfuncdef])
+reptfuncdef --> funcdef repfuncdef | .
+
+funcdef(funchead,funcbody)
+funchead(id,fparams,returntype)
+funcbody(reptvardeclorstat)
+
+reptvardeclorstat --> vardeclorstat reptvardeclorstat |.
+
+vardeclorstat --> 
+
+expr(arith,X) ; X --> relop(op,arith) | .
+
+arith(term,addop(op,term,arith)
+arith(term,[])
+
+term(factor,term)
+term(factor,[])
+
+factor(id, factor, idnest(id,idnest))
+factor(intnum)
+factor(floatnum)
+factor(arith)
+factor(not(factor)))
+factor(sign,factor)
+
+idnest --> dot(idnest(id,idnest))
+idnest --> .
+idnest(indice,idnest)
+idnest(param)
+param(idnest)
+
+member(funcdecl)
+var(id,type,var)
+var(idnest,var)
+var(aparams,idnest)
+var(
+var --> .
+
+
+\section{Design}
+Taking the input of a semantically correct file, it will start with converting it to a wordlist by parsings its structure of the characterlist of the file. Then it will parse out the comments then attempt to break it down into its abstract syntax tree format. The usage of prolog to do so was due to its ability to translate the sytax of the language directly into a ast and fit it assuming a syntactically correct program. With how it is constructed, I can test each branch of my program by calling $phrase(<desired-branch>(X),<token-list>).$ from within my program. This has accelerated testing and will help show validity of certain paths assuming a correct LL1 grammar which allows each path.
+\section{Tools Used}
+\subsection{Scryer-Prolog}
+The main driver, interpreter, and lifeline of this project. Around line 1113 of my code will be the main ast generator predicate which if given the name of an input and output file, it will execute the process to generate the ugly output of the ast. In order to prettyfy it the python function must be used from the cli with the command in the next section.
+\subsection{Python}
+Used to prettify the output of the prolog program because its outout was of the datastructure created into a file. The script to do so can be called as in the way $python prettify.py <input file> <output file>$.
+\end{document}

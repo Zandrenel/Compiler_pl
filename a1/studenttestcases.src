@@ -1,0 +1,74 @@
+////reserved word tests and operators and symbols
+==	+	|	(	;	if 	public	read
+<>	-	&	)	,	then	private	write
+<	*	!	{	.	else	func	return
+>	/		}	:	integer	var	self
+<=	=		[	::	float	struct	inherits
+>=			]	->	void	while	let
+						func	impl
+
+	
+
+
+// int tests
+0
+1
+01
+10
+12.
+000000000123
+12345000000000001
+
+
+// float tests
+01.23
+1.2323232320
+1.232323232
+12.34	
+120.34e10	
+12345.6789e-123	
+0000001.232323232
+2200000000012.34	
+120.34e10	
+12345.6789e-123	
+12345.6789e+123	
+12345.6789e-0123	
+12345.6789e+1230	
+
+
+
+// id tests
+abc 	
+abc1
+a1bc	
+abc_1abc	
+abc1_abc	
+
+// this is an inline comment
+
+/* this is a single line block comment */
+
+/* this is a 
+multiple line
+block comment 
+*/
+
+/* this is an imbricated 
+/* block comment
+*/
+*/
+
+
+/* this is an imbricated 
+/* block comment extreme case
+/* This should be level 3
+/* level 4
+/* level 5 
+/* level 6 depth comment */ */
+apples */
+pears */
+      */
+*/
+
+
+/*a=a block comment fail*/
