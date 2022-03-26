@@ -3,17 +3,16 @@ Author: Alexander De Laurentiis
 
 ===========================================================*/
 
+/*
 :-use_module(library(files)).
 :-use_module(library(charsio)).
 :-use_module(library(clpz)).
 :-use_module(library(dcgs)).
 :-use_module(library(lists)).
-%:-use_module(library(builtins)).
+:-use_module(library(builtins)).
+*/
 
-:-use_module(library(error)).
-%:- dynamic(symbol/4).
-
-
+:-set_prolog_flag(double_quotes,chars).
 
 
 
@@ -91,18 +90,18 @@ stream_to_charlist(Stream,[H|T]):-
 
 analyze([],_,_,_).
 analyze([H|T],L,Cl0,O) :-
-    Cl0 #> 0,
+    Cl0 > 0,
     token(H,D),
     D = 'Comment start',
-    Cl #= Cl0 + 1,
+    Cl is Cl0 + 1,
     Output = ['Comment',['level:',Cl],H,L],
     write(O,Output),
     analyze(T,L,Cl,O),!.
 analyze([H|T],L,Cl0,O) :-
-    Cl0 #> 0,
+    Cl0 > 0,
     token(H,D),
     (D = 'Comment end'
-    -> Cl #= Cl0 - 1;
+    -> Cl is Cl0 - 1;
      Cl = Cl0),
     Output = ['Comment',['level:',Cl],H,L],
     write(O,Output),
@@ -117,14 +116,14 @@ analyze([H|T],L0,Cl,O) :-
 analyze([H|T],L,Cl0,O) :-
     token(H,D),
     (D = 'Comment start'
-    -> Cl #= Cl0 + 1;
+    -> Cl is Cl0 + 1;
      Cl = Cl0),
     Output = [D,H,L],
     write(O,Output),
     analyze(T,L,Cl,O),!.
 analyze([H|T],L0,Cl,O) :-
     H = ['\n'],
-    L #= L0 + 1,
+    L is L0 + 1,
     write(O,'\n'),
     analyze(T,L,Cl,O),!.
 analyze([H|T],L,Cl,O) :-
@@ -172,7 +171,9 @@ analyze_file(Filein,Fileout) :-
     stream_to_charlist(S1,Lst0),
     phrase(wordlist(Lst1),Lst0),!,
     remove(Lst1,[],Lst),
+    write(Lst),
     analyze(Lst,0,0,S2),
+    write("apples are great"),
     close(S1),
     close(S2).
 
@@ -186,7 +187,8 @@ best way in which to program in scryer-prolog.
 
 % ?- test_negative.
 %@ false.
-
+%@    true
+%@ ;  false.
 
 % ?- test_positive.
 %@ false.
@@ -194,8 +196,85 @@ best way in which to program in scryer-prolog.
 %@ ;  false.
 
 
-% ?- analyze_file("bubblesort.src","bubblesort_semantic_analyzed.txt").
-
+% ?- analyze_file("studenttestcases.src","studenttestcasesout.txt").
+%@ ["//","//","reserved","word","tests","and","operators","and","symbols","
+%@ ","==","+","|","(",";","if","public","read","
+%@ ","<",">","-","&",")",",","then","private","write","
+%@ ","<","*","!","{",".","else","func","return","
+%@ ",">","/","}",":","integer","var","self","
+%@ ","<=","=","[",":",":","float","struct","inherits","
+%@ ",">=","]","->","void","while","let","
+%@ ","func","impl","
+%@ ","
+%@ ","
+%@ ","
+%@ ","
+%@ ","//","int","tests","
+%@ ","0","
+%@ ","1","
+%@ ","01","
+%@ ","10","
+%@ ","12.","
+%@ ","000000000123","
+%@ ","12345000000000001","
+%@ ","
+%@ ","
+%@ ","//","float","tests","
+%@ ","01.23","
+%@ ","1.2323232320","
+%@ ","1.232323232","
+%@ ","12.34","
+%@ ","120.34e10","
+%@ ","12345.6789e","-","123","
+%@ ","0000001.232323232","
+%@ ","2200000000012.34","
+%@ ","120.34e10","
+%@ ","12345.6789e","-","123","
+%@ ","12345.6789e","+","123","
+%@ ","12345.6789e","-","0123","
+%@ ","12345.6789e","+","1230","
+%@ ","
+%@ ","
+%@ ","
+%@ ","//","id","tests","
+%@ ","abc","
+%@ ","abc1","
+%@ ","a1bc","
+%@ ","abc_1abc","
+%@ ","abc1_abc","
+%@ ","
+%@ ","//","this","is","an","inline","comment","
+%@ ","
+%@ ","/*","this","is","a","single","line","block","comment","*/","
+%@ ","
+%@ ","/*","this","is","a","
+%@ ","multiple","line","
+%@ ","block","comment","
+%@ ","*/","
+%@ ","
+%@ ","/*","this","is","an","imbricated","
+%@ ","/*","block","comment","
+%@ ","*/","
+%@ ","*/","
+%@ ","
+%@ ","
+%@ ","/*","this","is","an","imbricated","
+%@ ","/*","block","comment","extreme","case","
+%@ ","/*","This","should","be","level","3","
+%@ ","/*","level","4","
+%@ ","/*","level","5","
+%@ ","/*","level","6","depth","comment","*/","*/","
+%@ ","apples","*/","
+%@ ","pears","*/","
+%@ ","*/","
+%@ ","*/","
+%@ ","
+%@ ","
+%@ ","/*","a","=","a","block","comment","fail","*/","
+%@ "]caught: error('$interrupt_thrown',repl)
+%@ caught: error('$interrupt_thrown',repl)
+%@ 
+%@ caught: error('$interrupt_thrown',repl)
 
 
 
@@ -475,35 +554,35 @@ quadruple(L1,L2,L3,L4,L):-
 
 strip_comments([],_Cl,[]).
 strip_comments([H|T],Cl0,Out):-
-    C10 #> 0,
+    C10 > 0,
     token(H,D),
     D = 'Comment start',
-    Cl #= Cl0 + 1,
+    Cl is Cl0 + 1,
     strip_comments(T,Cl,Out).
 strip_comments([H|T],Cl0,Out):-
-    C10 #> 0,
+    C10 > 0,
     token(H,D),
     D = 'Comment end',
-    Cl #= Cl0 - 1,
+    Cl is Cl0 - 1,
     strip_comments(T,Cl,Out).
 strip_comments([H|T],Cl0,Out):-
-    C10 #> 0,
+    C10 > 0,
     strip_comments(T,Cl0,Out).
 strip_comments([H|T],Cl0,Out):-
-    Cl0 #= 0,
+    Cl0 is 0,
     H = "//",
     split_delimiter([H|T],Comment,Rest,"\n"),
     write(Comment),
     write(Rest),
     strip_comments(Rest,Cl0,Out).
 strip_comments([H|T],Cl0,Out):-
-    Cl0 #= 0,
+    Cl0 is 0,
     token(H,D),
     D = 'Comment start',
-    Cl #= Cl0 + 1,
+    Cl is Cl0 + 1,
     strip_comments(T,Cl,Out).
 strip_comments([H|T1],Cl0,[H|T2]):-
-    Cl0 #= 0,
+    Cl0 is 0,
     write(H),
     strip_comments(T1,Cl0,T2).
 
@@ -716,8 +795,6 @@ factor_ast(node(factor,[F])) --> ["("], arithexpr_ast(F), [")"].
 factor_ast(node(factor,[node(not,[F])])) --> ["!"], factor_ast(F).
 factor_ast(node(factor,[node(sign,[S]),F])) --> sign_ast(S), factor_ast(F).
 factor_ast(node(factor,[terminal(floatnum,[F])])) --> seq(F).
-%factor_ast(node(factor,[terminal(floatnum,[F])])) --> I1,["."],I2,{integer(I1),integer(I2)}.
-%factor_ast(node(factor,[terminal(floatnum,[F])])) --> I1,{integer(I1)},["."],I2,{integer(I2)}.
 
 factor2_ast(F2) --> ["("], aparams_ast(F2), [")"].
 factor2_ast(F2) --> reptidnest1_ast(F2).  
@@ -1025,12 +1102,11 @@ command_traverse([H|T],Path,O):-
     traverse(H,Path,O),
     command_traverse(T,Path,O).
 
+
 assert_or_warn(ToAssert,O):-
     ToAssert,
     write(O,['Warning, Symbol already exists: ',ToAssert]),write(O,'\n'),!.
 assert_or_warn(ToAssert,_O):-assertz(ToAssert),!.
-
-
 
 % ?- assert_or_warn(symbol([scope("main",func_def),scope(global,program)],func_call,"printary",3)).
 %@ [Warning: Symbol already exists in this scope
@@ -1090,7 +1166,7 @@ param_decl(FID,node(fparam,
 
 count_func_call_params([],0).
 count_func_call_params(node(aparam,[_,Next]),C0):-
-    C #= C0 - 1,
+    C is C0 - 1,
     count_func_call_params(Next,C).
 
 
@@ -1132,6 +1208,7 @@ finalize_inherits([symbol([scope(_,S)|Rest],local,Visibility,ID,Type)|T],NewScop
     finalize_inherits(T,NewScope,O).
 
 
+
 % ?- findall([A,B],inherits(A,B),[X,Y]).
 %@ caught: error(existence_error(procedure,inherits/2),inherits/2)
 %@    X = ["QUADRATIC","POLYNOMIAL"], Y = ["LINEAR","POLYNOMIAL"].
@@ -1155,34 +1232,31 @@ tree_tests(Filein,Fileout,SemanticErrorFile) :-
     phrase(prog_ast(AST),Lst),!,
     write(S2,AST),
     %setup,
-    cleanup,
-%    retractall(symbol(_,_,_,_)),
-%    retractall(symbol(_,_,_,_,_)),
-%    retractall(symbol(_,_,_,_,_,_)),
-%    retractall(expression(_,_)),
-%    retractall(inherits(_,_)),
+    %cleanup,
+    retractall(symbol(_,_,_,_)),
+    retractall(symbol(_,_,_,_,_)),
+    retractall(symbol(_,_,_,_,_,_)),
+    retractall(expression(_,_)),
+    retractall(inherits(_,_)),
     open(SemanticErrorFile,write,S3,[]),
     traverse(AST,_P,S3),!,
     solve_inheritance(S3),
     print_symtable("Current_sym_table.txt"),
-    semantic_checking(AST,S3),
+    %    semantic_checking,
     close(S3),
     close(S1),
     close(S2).
-/*
 
+
+
+/*
 setup :-
     asserta(symbol(a,b,c,d)),
     asserta(symbol(a,b,c,d,e)),
     asserta(expression(a,b)),
     asserta(inherits(a,b)).
 */
-cleanup:-
-    retractall(inherits(_,_)),
-    retractall(expression(_,_)),
-    retractall(symbol(_,_,_,_,_,_)),
-    retractall(symbol(_,_,_,_,_)),
-    retractall(symbol(_,_,_,_)).
+
 /*
 
 declare the following
@@ -1197,57 +1271,28 @@ if in an impl
 */
 
 
-%@ caught: error(existence_error(procedure,dynamic/1),dynamic/1)
-
-
 % ?- asserta(symbol(apple,apple,apple,apple)).
-
-
-% ?- symbol(_,_,_,_).
+%@ caught: error(permission_error(modify,static_procedure,symbol/4),asserta/1)
 
 
 % ?- tree_tests("bubblesort.src","bubblesort_ugly_tree.txt","bubblesort_semantic.txt").
-%@ ["bubbleSort",scope(global,program)]2
-%@ ["printArray",scope(global,program)]2
-%@ ["printArray",scope(global,program)]2
-%@ ["main",scope(global,program)]2
-%@ caught: error(existence_error(procedure,inherits/2),inherits/2)
-
-
-%@ ["bubbleSort",scope(global,program)]2
-%@ ["printArray",scope(global,program)]2
-%@ ["printArray",scope(global,program)]2
-%@ ["main",scope(global,program)]2
-%@    true.
-%@ ["bubbleSort",scope(global,program)]2
-%@ ["printArray",scope(global,program)]2
-%@ ["printArray",scope(global,program)]2
-%@ ["main",scope(global,program)]2
-%@ caught: error(existence_error(procedure,inherits/2),inherits/2)
-
+%@ caught: error(permission_error(modify,static_procedure,symbol/4),retract/1)
 
 
 % ?- tree_tests("polynomial.src","polynomial_ugly_tree.txt","polynomial_semantic.txt").
-%@ ["evaluate",scope("POLYNOMIAL",impl_def),scope(global,program)]3
-%@ ["evaluate",scope("QUADRATIC",impl_def),scope(global,program)]3
-%@ ["build",scope("QUADRATIC",impl_def),scope(global,program)]3
-%@ ["build",scope("LINEAR",impl_def),scope(global,program)]3
-%@ ["evaluate",scope("LINEAR",impl_def),scope(global,program)]3
-%@ ["main",scope(global,program)]2
-%@ "Starting Checks"0_97871
-%@ 0_97871
-%@ 0_97871
-%@    true.
+%@ caught: error(permission_error(modify,static_procedure,symbol/4),retract/1)
+%@ caught: error(permission_error(modify,static_procedure,symbol/4),retract/
 
 
+% ?- expression(_,E).
+%@    E = node(expr,[node(arith_expr,[node(term,[node(factor,[terminal(intnum,["90"])]),[]])]),[]])
+%@ ;  E = node(expr,[node(arith_expr,[node(term,[node(factor,[terminal(intnum,["11"])]),[]])]),[]])
+%@ ;  E = node(expr,[node(arith_expr,[node(term,[node(factor,[terminal(intnum,["22"])]),[]])]),[]])
+%@ ;  E = node(expr,[node(arith_expr,[node(term,[node(factor,[terminal(intnum,["12"])]),[]])]),[]])
+%@ ;  ...
 
 /*
-?- open("expr_test.txt",write,O),findall(expression(_,E),expression(_,E),Expr),write(O,Expr),close(O).
-%@    O = '$stream'(0x55bce9f28e50), Expr = [expression(_A,node(expr,[node(arith_expr,[node(term,[node(factor,[terminal(intnum,["0 ..."])]),[]])]),[]])),expression(_B,node(expr,[node(arith_expr,[node(term,[node(factor,[terminal(id,[...]),[],...]),[]])]),[]])),expression(_C,node(expr,[node(arith_expr,[node(term,[node(factor,[terminal(id,...),...]),node(term,[...])]),node(addop,[terminal(addop,[...]),node(...)])]),[]])),expression(_D,node(expr,[node(arith_expr,[node(term,[node(factor,[...]),node(...)]),node(addop,[terminal(...)|...])]),[]])),expression(_E,node(expr,[node(arith_expr,[node(term,[node(...)|...])]),[]])),expression(_F,node(expr,[node(arith_expr,[node(term,...)]),[]])),expression(_G,node(expr,[node(arith_expr,[...]),[]])),expression(_H,node(expr,[node(...)|...])),expression(_I,node(expr,...)),expression(...)|...].
 
-*/
-
-/*
 Asserted format
 
 symbol(scope,source,type,identifier,value).
@@ -1288,179 +1333,91 @@ iterate_write([H|T],O):-
 
 /*
 
-Tests
+Tests to implement
+
+[ ] type checking on expressions and sub expressions
+  - maybe assert expressions too to check later?
+[ ] multiple declarations in the same scope
+[ ] any identifier must be defines in the scope its used in
+[ ] functioncalls use the correct amount of parameters
+[ ] function has been declared
+[ ] expression params are of correct type
+[ ] reffering to an array variable should be made using the same number of dimensions as declared in the var decl
+[ ] all indexes should be of integer type
+[ ] arrays as parameters must be compatible
+[ ] circular class dependencies through members/inheritance
+[ ] the dot operator only used on variables of class type (impl/struct)
+
 */
 
 %identifiers_in_use(O) :-
 
-all_function_call_usage(O):-
-    findall(symbol(Scope,function,Returns,ID),
-	    symbol(Scope,function,Returns,ID),
-	    Fs),
-    write(Fs),
-    function_call_usage(Fs,O).
-    
-
-function_call_usage([],O).
-function_call_usage([symbol(Scope,function,_Returns,ID)|T],O) :-
-    findall(ID,symbol(Scope,param,_,ID),Params1),
-    findall(ID,symbol(Scope,param,arr,_,ID),Params2),
-    length(Params1,Ps1),
-    length(Params2,Ps2),
-    symbol(_,func_call,ID,ParamsUsed),
-    ParamSize #= Ps1 + Ps2,
-    (ParamSize = ParamsUsed
-    -> write(O,[Scope,ID,'Correct param count']),write(O,'\n');
-     write(O,[Scope,ID,'Incorrect param count']),write(O,'\n')),
-    function_call_usage(T,O).
+function_call_usage(O) :-
+    symbol(Scope,function,Returns,ID),
+    findall(ID,symbol(Scope,param,T,ID),Params1),
+    findall(ID,symbol(Scope,param,arr,T,ID),Params2),
+    length(Params1,ParamSize1),
+    length(Params2,ParamSize2),
+    symbol(Scope,func_call,Function,ParamsUsed),
+    write(ParamSize1),write(ParamsSize2),nl,
+    (ParamSize1 = ParamsUsed;ParamSize2 = ParamsUsed
+    -> write(O,[func_call,Scope,Function,'Correct param count']),write(O,'\n');
+     write(O,[func_call,Scope,Function,'Incorrect param count']),write(O,'\n')).
 
 
-% ?- symbol(S,function,R,I),findall(I,symbol(S,param,_,I),P).
-%@    P = ["build","evaluate","build","evaluate","evaluate","evaluat ...","build ...","bui ...","e ...",...].
+types([intnum,floatnum,id]).
 
+traverse_expr(terminal(Name,_)):-
+    types(Types),
+    member(Name,Types),
+    write(Name),nl,
+    assertz(expr(Name)).
+traverse_expr(node(Name,Children)):-
+    command_traverse_expr(Children).
 
+command_traverse_expr([]).
+command_traverse_expr([H|T]):-
+    traverse_expr(H),
+    command_traverse_expr(T).
 
-
-traverse_expr([],_P).
-%traverse_expr(node(dot,_),_P).
-traverse_expr(terminal(intnum,_),_P):-
-    assertz(expr("integer")).
-traverse_expr(terminal(floatnum,_),_P):-
-    assertz(expr("float")).
-traverse_expr(terminal(Name,[Value]),P1):-
-    Name = id,
-    symbol(P2,_,T,Value);
-    symbol(P2,_,_,T,Value),
-    subscope(P1,P2),
-    write(Value),
-    assertz(expr(T)).
-traverse_expr(node(Name,Children),P):-
-    command_traverse_expr(Children,P).
-
-command_traverse_expr([],_P).
-command_traverse_expr([H|T],P):-
-    traverse_expr(H,P),
-    command_traverse_expr(T,P).
-
-test_expr_type(O) :-
+test_expr_type :-
     findall(expression(P,E),expression(P,E),Exprs),
-    traverse_all_expr(Exprs,O).
+    traverse_all_expr(Exprs).
 
-traverse_all_expr([],_O).
-traverse_all_expr([expression(P,H)|T],O):-
-    traverse_expr(H,P),
-    findall(E,expr(E),Exp),
-    all_same(Exp),
+traverse_all_expr([]).
+traverse_all_expr([H|T]):-
+    traverse_expr(H),
+    findall(expr(E),expr(E),Exprs),
+    all_same(Exprs),
     retractall(expr(_)),
-    traverse_all_expr(T,O).
-traverse_all_expr([_H|T],O):-
-    findall(E,expr(E),Exp),
-    Exp = [],
-    traverse_all_expr(T,O).
-traverse_all_expr([H|T],O):-
-    findall(E,expr(E),Exp),
-    write(O,["Expression type mismatch:\n",H]),write(O,'\n'),
-    write(O,Exp),write(O,'\n'),
-    retractall(expr(_)),
-    traverse_all_expr(T,O).
+    traverse_all_expr(T).
 
 all_same([]).
 all_same([_H]).
 all_same([H,H|T]):-
     all_same([H|T]).
 
-subscope(Lst,Lst).
-subscope([H|T],L2):-
-    subscope(T,L2).
-
 % ?- all_same([a,a,a,a,a]).
 %@    true
 %@ ;  ...
 
-/*
-% ?-     findall(E,expr(E),Exp).
-%@    Exp = [intnum].
-*/
 
-/* 
-
-Dot operator only on class type
-
-*/
+% ?- traverse_expr(expr(_)),traverse_expr(node(expr,[node(arith_expr,[node(term,[node(factor,[terminal(intnum,["90"])]),[]])]),[]])),findall(expr(E),expr(E),Exprs),all_same(Exprs),retractall(expr(_)).
+%@ false.
 
 
-dot_op_check([],_O).
-dot_op_check([[]],_O).
-dot_op_check(terminal(Name,_),_O).
-dot_op_check(node(id_statement,
-		   [terminal(id,[Name]),
-		    node(dot,Children)]),O):-
-    symbol(_,function,_,Name),
-    command_dot_op_check(Children,O).
-dot_op_check(node(id_statement,
-		   [terminal(id,[Name]),
-		    node(dot,Children)]),O):-
-    write(O,["Warning, dot operator used on non function",Name]),
-    command_dot_op_check(Children,O).
-dot_op_check(node(_Name,Children),O):-
-    command_dot_op_check(Children,O).
+% ?- retractall(expr(_)),traverse_expr(node(expr,[node(arith_expr,[node(term,[node(factor,[terminal(intnum,["90"])]),[]])]),[]])).
+%@ intnum
+%@ false.
 
+% ?- expr(A).
+%@    A = intnum.
 
-command_dot_op_check([],_P).
-command_dot_op_check([H|T],P):-
-    dot_op_check(H,P),
-    command_dot_op_check(T,P).
-
-
-
-
-% ?- subscope([scope("evaluate",func_def),scope("QUADRATIC",impl_def),scope(global,program)],[scope("QUADRATIC",impl_def),scope(global,program)]).
-%@    true
-%@ ;  false.
-
-% ?- tree_tests("bubblesort.src","bubblesort_ugly_tree.txt","bubblesort_semantic.txt").
-%@ ["bubbleSort",scope(global,program)]2
-%@ ["printArray",scope(global,program)]2
-%@ ["printArray",scope(global,program)]2
-%@ ["main",scope(global,program)]2
-%@ ["failure",scope(global,program)]2
-%@ ["failure2",scope(global,program)]2
-%@ "Starting Checks""arr""arr""arr"   true.
-
-
-% ?- tree_tests("polynomial.src","polynomial_ugly_tree.txt","polynomial_semantic.txt").
-%@ ["evaluate",scope("POLYNOMIAL",impl_def),scope(global,program)]3
-%@ ["evaluate",scope("QUADRATIC",impl_def),scope(global,program)]3
-%@ ["build",scope("QUADRATIC",impl_def),scope(global,program)]3
-%@ ["build",scope("LINEAR",impl_def),scope(global,program)]3
-%@ ["evaluate",scope("LINEAR",impl_def),scope(global,program)]3
-%@ ["main",scope(global,program)]2
-%@ "Starting Checks"   true.
-
-
-% ?- tree_tests("polynomialsemanticerrors.src","polynomial_ugly_tree.txt","polynomial_semantic.txt").
-%@ ["evaluate",scope("POLYNOMIAL",impl_def),scope(global,program)]3
-%@ ["build",scope("LINEAR",impl_def),scope(global,program)]3
-%@ ["evaluate",scope("LINEAR",impl_def),scope(global,program)]3
-%@ ["evaluate",scope("QUADRATIC",impl_def),scope(global,program)]3
-%@ ["build",scope("QUADRATIC",impl_def),scope(global,program)]3
-%@ ["build2",scope("QUADRATIC",impl_def),scope(global,program)]3
-%@ ["f",scope(global,program)]2
-%@ ["f",scope(global,program)]2
-%@ ["f",scope(global,program)]2
-%@ ["f3",scope(global,program)]2
-%@ [terminal(arr,["2"]),terminal(arr,["3"])]
-%@ ["main",scope(global,program)]2
-%@ [terminal(arr,["3"]),[]]
-%@ [terminal(arr,["2"]),[terminal(arr,["3"]),[]]]
-%@ "Starting Checks"   true.
-
-semantic_checking(Ast,O) :-
+semantic_checking(OutFile) :-
+    open(OutFile,write,O,[]),
     write("Starting Checks"),
-    all_function_call_usage(O),
-    test_expr_type(O),!,
-    dot_op_check(Ast,O),!.
-
+    findall(_,function_call_usage(O),_),
+    close(O).
 
 % ?- semantic_checking("semantic_errors.txt").
 %@ "Starting Checks"0_1063

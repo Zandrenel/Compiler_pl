@@ -1,0 +1,17 @@
+[Warning, Symbol already exists: ,expression([scope("bubbleSort",func_def),scope(global,program)],node(expr,[node(arith_expr,[node(term,[node(factor,[terminal(intnum,["0"])]),[]])]),[]]))]
+[Warning, Symbol already exists: ,expression([scope("bubbleSort",func_def),scope(global,program)],node(expr,[node(arith_expr,[node(term,[node(factor,[terminal(intnum,["0"])]),[]])]),[]]))]
+[Warning, Symbol already exists: ,symbol([scope("printArray",func_def),scope(global,program)],function,"void","printArray")]
+[Warning, Symbol already exists: ,symbol([scope("printArray",func_def),scope(global,program)],param,arr,"integer","arr")]
+[Warning, Symbol already exists: ,symbol([scope("printArray",func_def),scope(global,program)],param,"integer","size")]
+[Warning, function has no body: ,[scope("printArray",func_def),scope(global,program)]]
+[Warning, Symbol already exists: ,symbol([scope("main",func_def),scope(global,program)],func_call,"printarray",2)]
+[Warning, Symbol already exists: ,symbol([scope("failure",func_def),scope(global,program)],func_call,"printarray",2)]
+["Expression type mismatch:
+",expression([scope("bubbleSort",func_def),scope(global,program)],node(expr,[node(arith_expr,[node(term,[node(factor,[terminal(id,["arr"]),node(idnest,[node(indice,[node(arith_expr,[node(term,[node(factor,[terminal(id,["j"]),[],[]]),[]]),node(addop,[terminal(addop,["+"]),node(term,[node(factor,[terminal(intnum,["1"])]),[]])])])]),[]]),[]]),[]])]),[]]))]
+["integer"]
+["Expression type mismatch:
+",expression([scope("failure2",func_def),scope(global,program)],node(expr,[node(arith_expr,[node(term,[node(factor,[terminal(intnum,["5"])]),node(term,[node(multop,[terminal(multop,["*"])]),node(factor,[terminal(floatnum,[["1",".","0"]])]),[]])])]),[]]))]
+["integer"]
+["Expression type mismatch:
+",expression([scope("failure2",func_def),scope(global,program)],node(expr,[node(arith_expr,[node(term,[node(factor,[terminal(intnum,["1"])]),[]]),node(addop,[terminal(addop,["+"]),node(term,[node(factor,[terminal(floatnum,[["2",".","0"]])]),[]])])]),[]]))]
+["integer"]
