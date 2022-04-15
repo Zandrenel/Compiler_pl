@@ -1,0 +1,4 @@
+["Expression type mismatch:
+",expression([scope("main",func_def),scope(global,program)],node(expr,[node(arith_expr,[node(term,[node(factor,[terminal(intnum,["1"])]),[]]),node(addop,[terminal(addop,["+"]),node(term,[node(factor,[terminal(intnum,["4"])]),[]])])]),[]]))]
+["integer"]
+[undeclared Func,"main"]

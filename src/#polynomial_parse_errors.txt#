@@ -1,0 +1,4 @@
+error line:33 ","[reptfparams4m,")","->",returntype,";",reptstructdecl,"}",";",reptprogram,$]
+error line:41 ","[reptfparams4,")","->",returntype,";",reptstructdecl,"}",";",reptprogram,$]
+error line:46 "POLYNOMIAL"[reptprogram,$]
+Eof: NonTerminals left[reptprogram,$]

@@ -1,0 +1,15 @@
+[Warning, Symbol already exists: ,symbol([scope("main",func_def),scope(global,program)],local,"integer","o")]
+[Warning, Symbol already exists: ,symbol([scope("main",func_def),scope(global,program)],local,"integer","o")]
+[Warning, Symbol already exists: ,symbol([scope("main",func_def),scope(global,program)],local,"integer","o")]
+[Warning, Symbol already exists: ,symbol([scope("main",func_def),scope(global,program)],local,"integer","o")]
+[Warning, Symbol already exists: ,expression([scope("main",func_def),scope(global,program)],node(expr,[node(arith_expr,[node(term,[node(factor,[terminal(id,["i"]),[],[]]),[]]),node(addop,[terminal(addop,["+"]),node(term,[node(factor,[terminal(intnum,["4"])]),[]])])]),[]]))]
+[Warning, Symbol already exists: ,expression([scope("main",func_def),scope(global,program)],node(expr,[node(arith_expr,[node(term,[node(factor,[terminal(id,["n"]),[],[]]),[]])]),[]]))]
+["Expression type mismatch:
+",expression([scope("main",func_def),scope(global,program)],node(expr,[node(arith_expr,[node(term,[node(factor,[terminal(floatnum,["20.2"])]),[]]),node(addop,[terminal(addop,["+"]),node(term,[node(factor,[terminal(intnum,["3"])]),[]])])]),[]]))]
+["float"]
+["Expression type mismatch:
+",expression([scope("main",func_def),scope(global,program)],node(expr,[node(arith_expr,[node(term,[node(factor,[node(arith_expr,[node(term,[node(factor,[terminal(intnum,["7"])]),[]]),node(addop,[terminal(addop,["-"]),node(term,[node(factor,[terminal(id,["w"]),[],[]]),[]])])])]),node(term,[node(multop,[terminal(multop,["*"])]),node(factor,[node(arith_expr,[node(term,[node(factor,[terminal(intnum,["1"])]),[]]),node(addop,[terminal(addop,["-"]),node(term,[node(factor,[node(arith_expr,[node(term,[node(factor,[terminal(intnum,["2"])]),node(term,[node(multop,[terminal(multop,["*"])]),node(factor,[terminal(intnum,["9"])]),[]])])])]),[]])])])]),[]])])]),[]]))]
+["integer"]
+[undeclared Func,"main"]
+[undeclared ID,[scope("main",func_def),scope(global,program)],"q"]
+[undeclared ID,[scope("main",func_def),scope(global,program)],"w"]

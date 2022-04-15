@@ -1,0 +1,3 @@
+[Warning, Symbol already exists: ,expression([scope("bubbleSort",func_def),scope(global,program)],node(expr,[node(arith_expr,[node(term,[node(factor,[terminal(intnum,["0"])]),[]])]),[]]))]
+[Warning, Symbol already exists: ,expression([scope("bubbleSort",func_def),scope(global,program)],node(expr,[node(arith_expr,[node(term,[node(factor,[terminal(intnum,["0"])]),[]])]),[]]))]
+[Warning, Symbol already exists: ,symbol([scope("main",func_def),scope(global,program)],func_call,"printarray",2)]

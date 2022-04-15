@@ -1,0 +1,16 @@
+[Warning, Symbol already exists: ,expression([scope("bubbleSort",func_def),scope(global,program)],node(expr,[node(arith_expr,[node(term,[node(factor,[terminal(intnum,["0"])]),[]])]),[]]))]
+[Warning, Symbol already exists: ,expression([scope("bubbleSort",func_def),scope(global,program)],node(expr,[node(arith_expr,[node(term,[node(factor,[terminal(intnum,["0"])]),[]])]),[]]))]
+[Warning, Symbol already exists: ,expression([scope("bubbleSort",func_def),scope(global,program)],node(expr,[node(arith_expr,[node(term,[node(factor,[terminal(intnum,["0"])]),[]])]),[]]))]
+[Warning, Symbol already exists: ,symbol([scope("main",func_def),scope(global,program)],func_call,"printarray",2)]
+["Expression type mismatch:
+",expression([scope("bubbleSort",func_def),scope(global,program)],node(expr,[node(arith_expr,[node(term,[node(factor,[terminal(id,["arr"]),node(idnest,[node(indice,[node(arith_expr,[node(term,[node(factor,[terminal(id,["j"]),[],[]]),[]]),node(addop,[terminal(addop,["+"]),node(term,[node(factor,[terminal(intnum,["1"])]),[]])])])]),[]]),[]]),[]])]),[]]))]
+["integer"]
+[undeclared Func,"bubbleSort"]
+"error: "[undeclared Func,"printArray"]
+"error: "[undeclared Func,"main"]
+[undeclared Func,[scope("main",func_def),scope(global,program)]]
+[undeclared Func,[scope("main",func_def),scope(global,program)]]
+[undeclared Func,[scope("main",func_def),scope(global,program)]]
+[undeclared Func,[scope("main",func_def),scope(global,program)]]
+[undeclared ID,[scope("main",func_def),scope(global,program)],"printarray"]
+"error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: ""error: "

@@ -1,0 +1,4 @@
+error line:43 "i"["}",";",reptfuncbody,"}",reptprogram,$]
+[Resumed parse,44]
+error line:44 ";"[reptprogram,$]
+[Resumed parse,47]

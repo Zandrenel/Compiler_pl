@@ -1,0 +1,2 @@
+symbol([scope("main",func_def),scope(global,program)],function,"void","main")
+symbol([scope("main",func_def),scope(global,program)],local,"integer","i")

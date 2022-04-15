@@ -1,0 +1,11 @@
+func main() -> void
+{
+    let x: integer;
+    let a: integer;
+    let b: integer;
+    a = 20;
+    b = 4;
+    x = a+b;
+    x = x+a/b;
+    write(x);
+}

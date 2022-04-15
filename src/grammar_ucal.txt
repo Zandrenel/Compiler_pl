@@ -1,0 +1,189 @@
+START -> REPTPROGRAM .
+
+REPTPROGRAM -> STRUCTORIMPLORFUNC REPTPROGRAM
+| .
+
+
+ADDOP -> plus 
+        |minus 
+        |or .
+
+APARAMS -> EXPR APARAMSTAIL 
+          |.
+
+APARAMSTAIL -> comma EXPR .
+
+ARITHEXPR -> TERM RIGHTRECARITHEXPR .
+
+ARRAYSIZE -> lsqbr ARRAYSIZEP rsqbr .
+
+ARRAYSIZEP -> intnum 
+             |.
+
+ASSIGNOP -> equal .
+
+EXPR ->  ARITHEXPR EXPR2.
+
+EXPR2 -> RELOP ARITHEXPR
+      |.
+
+FACTOR -> id FACTOR2 REPTVARIABLEORFUNCTIONCALL 
+         |intlit 
+         |floatlit 
+         |lpar ARITHEXPR rpar 
+         |not FACTOR 
+         |SIGN FACTOR .
+
+FACTOR2 -> lpar APARAMS rpar
+	| REPTIDNEST1 .
+
+REPTVARIABLEORFUNCTIONCALL -> IDNEST REPTVARIABLEORFUNCTIONCALL
+			   | .
+
+
+FPARAMS ->id colon TYPE REPTFPARAMS3 REPTFPARAMS4
+          |.
+
+
+REPTFPARAMS3 ->	ARRAYSIZE REPTFPARAMS3
+	     | .
+
+
+REPTFPARAMS4 -> FPARAMSTAIL REPTFPARAMS4
+	     | .
+
+
+REPTFPARAMSTAIL4 -> ARRAYSIZE REPTFPARAMSTAIL4
+	     | .
+
+
+FPARAMSTAIL -> comma id colon TYPE REPTFPARAMSTAIL4 .
+
+FUNCBODY -> lcurbr REPTFUNCBODY rcurbr .
+
+REPTFUNCBODY -> VARDECLORSTAT REPTFUNCBODY
+|.
+
+
+FUNCDECL -> FUNCHEAD semi .
+
+FUNCDEF -> FUNCHEAD FUNCBODY .
+
+FUNCHEAD -> func id lpar FPARAMS rpar minusarrow RETURNTYPE .
+
+IDNEST ->  dot id IDNEST2 .
+
+IDNEST2 -> lpar APARAMS rpar
+      |REPTIDNEST1 .
+
+IMPLDEF -> impl id lcurbr REPTFUNCDEF rcurbr .
+
+REPTFUNCDEF -> FUNCDEF REPTFUNCDEF
+	    | .
+
+INDICE -> lsqbr ARITHEXPR rsqbr .
+
+MEMBERDECL -> FUNCDECL 
+             |VARDECL .
+
+MULTOP -> mult 
+         |div 
+         |and .
+
+STRUCTINHERITS -> inherits id REPTSTRUCTINHERITS 
+                 |.
+
+REPTSTRUCTINHERITS -> comma id REPTSTRUCTINHERITS
+		  | .
+
+
+
+RELEXPR -> ARITHEXPR RELOP ARITHEXPR .
+
+RELOP -> eq 
+        |neq 
+        |lt 
+        |gt 
+        |leq 
+        |geq .
+
+RETURNTYPE -> TYPE 
+             |void .
+
+RIGHTRECARITHEXPR -> 
+                    |ADDOP TERM RIGHTRECARITHEXPR .
+
+RIGHTRECTERM -> 
+               |MULTOP FACTOR RIGHTRECTERM .
+
+
+SIGN -> plus 
+       |minus .
+
+STATBLOCK -> lcurbr STATEMENT rcurbr 
+            |STATEMENT 
+            |.
+
+STATEMENT -> id STATEMENTIDNEST semi
+            |if lpar RELEXPR rpar then STATBLOCK else STATBLOCK semi 
+            |while lpar RELEXPR rpar STATBLOCK semi 
+            |read lpar VARIABLE rpar semi 
+            |write lpar EXPR rpar semi 
+            |return lpar EXPR rpar semi.
+
+STATEMENTIDNEST -> dot id statementidnest
+| lpar APARAMS rpar STATEMENTIDNEST2
+| INDICE REPTIDNEST1 STATEMENTIDNEST3
+| ASSIGNOP EXPR .
+
+STATEMENTIDNEST2 -> dot id STATEMENTIDNEST 
+| .
+
+STATEMENTIDNEST3 -> ASSIGNOP EXPR
+| dot id STATEMENTIDNEST .
+
+REPTIDNEST1 -> INDICE REPTIDNEST1
+	    | .
+
+
+
+
+STRUCTDECL -> struct id STRUCTINHERITS lcurbr REPTSTRUCTDECL rcurbr semi .
+
+REPTSTRUCTDECL -> VISIBILITY MEMBERDECL REPTSTRUCTDECL
+	       |.
+
+
+STRUCTORIMPLORFUNC -> STRUCTDECL 
+                     |IMPLDEF 
+                     |FUNCDEF .
+
+TERM -> FACTOR RIGHTRECTERM .
+
+TYPE -> integer 
+       |float 
+       |id .
+
+VARDECL -> let id colon TYPE REPTVARDECL semi .
+
+REPTVARDECL -> ARRAYSIZE REPTVARDECL
+	   | .
+
+VARDECLORSTAT -> VARDECL 
+                |STATEMENT .
+
+VARIABLE ->  id VARIABLE2.
+
+VARIABLE2 -> REPTIDNEST1 REPTVARIABLE 
+	  | lpar APARAMS rpar VARIDNEST.
+
+REPTVARIABLE -> VARIDNEST REPTVARIABLE
+	     | .
+
+VARIDNEST -> dot id VARIDNEST2 .
+
+VARIDNEST2 -> lpar APARAMS rpar VARIDNEST
+	   | REPTIDNEST1 .
+
+VISIBILITY -> public 
+             |private .
