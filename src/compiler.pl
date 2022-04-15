@@ -1,7 +1,6 @@
 /*===========================================================
 Author: Alexander De Laurentiis
-Date:04/10/22
-Compiler Final Submission
+Compiler for an object oriented language
 
 ===========================================================*/
 
@@ -212,6 +211,7 @@ best way in which to program in scryer-prolog.
 %@ ;  false.
 
 
+% 
 % ?- analyze_file("bubblesort.src","bubblesort_semantic_analyzed.txt").
 %@ ["//","Assignment","5","coverage",":","
 %@ ","//","-","-","-","-","-","-","-","-","-","-","-","-","-","
