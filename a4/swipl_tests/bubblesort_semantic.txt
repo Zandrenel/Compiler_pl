@@ -1,6 +1,0 @@
-[Warning, Symbol already exists: ,expression([scope([b,u,b,b,l,e,S,o,r,t],func_def),scope(global,program)],node(expr,[node(arith_expr,[node(term,[node(factor,[terminal(intnum,[[0]])]),[]])]),[]]))]
-[Warning, Symbol already exists: ,expression([scope([b,u,b,b,l,e,S,o,r,t],func_def),scope(global,program)],node(expr,[node(arith_expr,[node(term,[node(factor,[terminal(intnum,[[0]])]),[]])]),[]]))]
-[Warning, Symbol already exists: ,symbol([scope([p,r,i,n,t,A,r,r,a,y],func_def),scope(global,program)],function,[v,o,i,d],[p,r,i,n,t,A,r,r,a,y])]
-[Warning, Symbol already exists: ,symbol([scope([p,r,i,n,t,A,r,r,a,y],func_def),scope(global,program)],param,arr,[i,n,t,e,g,e,r],[a,r,r])]
-[Warning, Symbol already exists: ,symbol([scope([p,r,i,n,t,A,r,r,a,y],func_def),scope(global,program)],param,[i,n,t,e,g,e,r],[s,i,z,e])]
-[Warning, function has no body: ,[scope([p,r,i,n,t,A,r,r,a,y],func_def),scope(global,program)]]
