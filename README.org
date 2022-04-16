@@ -1,0 +1,12 @@
+
+
+* Grammar
+
+* Stages
+** Semantic Analysis
+** Parsing
+** Abstract tree generation
+** Symbol table generation and semantic checking
+** Code generation
+
+* Compilation
