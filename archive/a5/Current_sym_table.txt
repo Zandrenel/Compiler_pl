@@ -1,8 +1,0 @@
-symbol([scope("main",func_def),scope(global,program)],function,"void","main")
-symbol([scope("main",func_def),scope(global,program)],local,"integer","i")
-symbol([scope("main",func_def),scope(global,program)],local,"integer","j")
-symbol([scope("main",func_def),scope(global,program)],local,"integer","k")
-symbol([scope("main",func_def),scope(global,program)],local,"integer","l")
-symbol([scope("main",func_def),scope(global,program)],local,"integer","m")
-symbol([scope("main",func_def),scope(global,program)],local,"integer","n")
-symbol([scope("main",func_def),scope(global,program)],local,"integer","o")

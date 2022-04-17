@@ -1,2 +1,0 @@
-[Warning, Symbol already exists: ,symbol([scope("QUADRATIC",struct),scope(global,program)],function,"QUADRATIC","build")]
-[Warning, Symbol already exists: ,symbol([scope("main",func_def),scope(global,program)],func_call,"evaluate",1)]

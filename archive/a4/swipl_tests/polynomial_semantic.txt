@@ -1,1 +1,0 @@
-[Warning, Symbol already exists: ,symbol([scope([Q,U,A,D,R,A,T,I,C],struct),scope(global,program)],function,[Q,U,A,D,R,A,T,I,C],[b,u,i,l,d])]

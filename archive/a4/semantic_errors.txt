@@ -1,3 +1,0 @@
-[func_call,[scope("main",func_def),scope(global,program)],"printarray",Incorrect param count]
-[func_call,[scope("main",func_def),scope(global,program)],"bubbleSort",Incorrect param count]
-[func_call,[scope("main",func_def),scope(global,program)],"printarray",Incorrect param count]
